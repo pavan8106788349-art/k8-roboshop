@@ -18,9 +18,9 @@ metadata:
   namespace: roboshop
   # these labels are replicaset labels
   labels:
+    component: catalogue
     project: roboshop
     tier: backend
-    component: catalogue
 spec:
   replicas: 1
   selector:
@@ -79,9 +79,9 @@ metadata:
 spec:
   selector:
     # labels are used as selectors
+    component: catalogue
     project: roboshop
     tier: backend
-    component: catalogue
   ports:
   - protocol: TCP
     port: 8080 # servie port
