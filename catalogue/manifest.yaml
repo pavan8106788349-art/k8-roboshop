@@ -18,9 +18,9 @@ metadata:
   namespace: roboshop
   # these labels are replicaset labels
   labels:
-    component: catalogue
     project: roboshop
     tier: backend
+    component: catalogue
 spec:
   replicas: 1
   selector:
@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: pavankumarsri/catalogue:1.4.0
+        image: joindevops/catalogue:1.4.0
         imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
           requests:
@@ -50,22 +50,22 @@ spec:
             memory: "128Mi"
         readinessProbe:
           # httpGet:
-          #   path: /healthz
+          #   path: /health
           #   port: 8080
           tcpSocket:
             port: 8080
-          failure-threshold: 2
-          period seconds: 10  
-          initialdelaySeconds: 15
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 15
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /health
             port: 8080
-            failure-threshold: 2
-            period seconds: 10  
+          failureThreshold: 2
+          periodSeconds: 10
         envFrom:
-            - configMapRef:
-                name: catalogue
+        - configMapRef:
+            name: catalogue
 ---
 apiVersion: v1
 kind: Service
@@ -79,10 +79,10 @@ metadata:
 spec:
   selector:
     # labels are used as selectors
-    component: catalogue
     project: roboshop
     tier: backend
+    component: catalogue
   ports:
   - protocol: TCP
     port: 8080 # servie port
-    targetPort: 8080 # container port 
+    targetPort: 8080 # container port
