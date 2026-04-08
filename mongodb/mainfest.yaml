@@ -45,5 +45,5 @@ spec:
     component: mongodb
   ports:
   - protocol: TCP
-    port: 80 # servie port
+    port: 27017 # servie port
     targetPort: 27017 # container port       
