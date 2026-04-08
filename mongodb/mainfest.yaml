@@ -5,24 +5,24 @@ metadata:
   namespace: roboshop
   # these labels are replicaset labels
   labels:
+    component: mongodb
     project: roboshop
     tier: mongodb
-    component: mongodb
 spec:
   replicas: 1
   selector:
     # using these labels replica set selects the pod
     matchLabels:
+      component: mongodb
       project: roboshop
       tier: mongodb
-      component: mongodb
   # This is pod definition, pod is subset of replicaset
   template:
     metadata:
       labels:
+        component: mongodb
         project: roboshop
         tier: mongodb
-        component: mongodb
     spec:
       containers:
       - name: mongodb
@@ -34,15 +34,15 @@ metadata:
   name: mongodb
   namespace: roboshop
   labels:
+    component: mongodb
     project: roboshop
     tier: mongodb
-    component: mongodb
 spec:
   selector:
     # labels are used as selectors
-    project: roboshop
-    tier: db
     component: mongodb
+    project: roboshop
+    tier: mongodb
   ports:
   - protocol: TCP
     port: 27017 # servie port
