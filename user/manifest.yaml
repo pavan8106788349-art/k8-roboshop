@@ -5,7 +5,7 @@ metadata:
   namespace: roboshop
   labels:
     project: roboshop
-    tier: app
+    tier: backend
     component: user
 data:
   REDIS_URL: "redis://redis:6379"
@@ -20,7 +20,7 @@ metadata:
   # these labels are replicaset labels
   labels:
     project: roboshop
-    tier: app
+    tier: backend
     component: user
 spec:
   replicas: 1
@@ -28,19 +28,19 @@ spec:
     # using these labels replica set selects the pod
     matchLabels:
       project: roboshop
-      tier: app
+      tier: backend
       component: user
   # This is pod definition, pod is subset of replicaset
   template:
     metadata:
       labels:
         project: roboshop
-        tier: app
+        tier: backend
         component: user
     spec:
       containers:
       - name: user
-        image: pavankumarsri/user:1.4.0
+        image: joindevops/user:1.4.0
         imagePullPolicy: Always # safe to pull everytime, there may be images with same version rebuilt and pushed
         resources:
           requests:
@@ -75,13 +75,13 @@ metadata:
   namespace: roboshop
   labels:
     project: roboshop
-    tier: app
+    tier: backend
     component: user
 spec:
   selector:
     # labels are used as selectors
     project: roboshop
-    tier: app
+    tier: backend
     component: user
   ports:
   - protocol: TCP
