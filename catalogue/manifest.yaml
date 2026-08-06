@@ -38,7 +38,7 @@ spec:
         component: catalogue
     spec:
      containers:
-- name: catalogue
+-  name: catalogue
   image: pavankumarsri/catalogue:1.0.0
   resources:
     requests:
