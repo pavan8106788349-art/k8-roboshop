@@ -7,6 +7,8 @@ metadata:
     project: roboshop
     tier: backend
     component: catalogue
+data:
+  MONGO: "mongodb"   
 
 spec:
   replicas: 1
