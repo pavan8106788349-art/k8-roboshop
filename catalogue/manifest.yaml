@@ -36,7 +36,8 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: pavankumarsri/catalogue:1.0.0
+        image: pavankumarsri/catalogue:1.4.0
+        imagePullPolicy: Always # safe to pull everytime, there may be images with sameversion rebuilt and pushed
 
         resources:
           requests:
