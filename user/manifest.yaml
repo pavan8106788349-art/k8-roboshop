@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user
+  namespace: roboshop
+  labels:
+    project: roboshop
+    tier: backend
+    component: user
+data:
+ REDIS_URL: "redis://redis:6379"
+ MONGO_URL:  "MONGO_URL: mongodb://mongodb:27017/users"
+ MONGO: "true"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  namespace: roboshop
+  labels:
+    project: roboshop
+    tier: backend
+    component: user
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      project: roboshop
+      tier: backend
+      component: user
+
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        tier: backend
+        component: user
+
+    spec:
+      containers:
+      - name: cart
+        image: pavankumarsri/user:1.4.0
+        imagePullPolicy: Always # safe to pull everytime, there may be images with sameversion rebuilt and pushed
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 15
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 5
+
+        envFrom:
+        - configMapRef:
+            name: user
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  namespace: roboshop
+  labels:
+    project: roboshop
+    tier: backend
+    component: user
+
+spec:
+  selector:
+    project: roboshop
+    tier: backend
+    component: user
+
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
